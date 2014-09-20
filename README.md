@@ -22,14 +22,16 @@ Please report!
 
 Usage
 =====
+<ol>
+<il>	1. Create SQMParser object</il>
+<il>	2. Open mission.sqm file</il>
+<il>	3. Edit file</il>
+<il>	4. Save file (to new path)</il>
+</ol>
 
-	1. Create SQMParser object
-	2. Open mission.sqm file
-	3. Edit file
-	4. Save file (to new path)
-	
 Examples
 =======
+```
 import org.arma.sqmparser.SQMParser;
 
 class SQMParserUser 
@@ -43,3 +45,4 @@ class SQMParserUser
 		parser.write("mission_edited.sqm"); //write new mission.sqm file
 	}
 }
+```
