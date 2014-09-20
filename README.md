@@ -5,14 +5,14 @@ SQM parser written in Java
 
 This library allows easy editing of Arma (2 or 3) mission.sqm file in Java application.
 
-Currently working:
-	- Removal of classes (units etc)
-	- Editing of parameters
-	- Parameter deletion
-	- Parameter adding
+###Currently working:
+* Removal of classes (units etc)
+* Editing of parameters
+* Parameter deletion
+* Parameter adding
 	
-What's not working:
-	- Adding of new Classes
+###What's not working
+* Adding of new Classes
 
 
 
@@ -22,12 +22,10 @@ Please report!
 
 Usage
 =====
-<ol>
-<il>	1. Create SQMParser object</il>
-<il>	2. Open mission.sqm file</il>
-<il>	3. Edit file</il>
-<il>	4. Save file (to new path)</il>
-</ol>
+1. Create SQMParser object
+2. Open mission.sqm file
+3. Edit file
+4. Save new file
 
 Examples
 =======
