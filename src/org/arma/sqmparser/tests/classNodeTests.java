@@ -16,6 +16,10 @@ public class classNodeTests
 				  			 "{\n" +
 				  			 "	id=2;\n" +
 				  			 "};";
+	String classTextParameter = "class Item0\n" +
+ 			 				 			 "{\n" +
+ 			 				 			 "init=this addweapon \"\"ACRE_PRC148_UHF\"\";" + "\n" +
+ 			 				 			 "};";
 	String classTextValue = "class Item0\n" +
 							"{\n" +
 							"	id=3;\n" +
@@ -93,5 +97,12 @@ public class classNodeTests
 		ClassNode child = node.getClassByID("1");
 		child.delete();
 		assertEquals(0, node.getChildren().size());
+	}
+	@Test
+	public void testParameter()
+	{
+		ClassNode node = new ClassNode(classTextParameter, null);
+		Parameter parameter = node.getParameter("init");
+		assertEquals("this addweapon \"\"ACRE_PRC148_UHF\"\"", parameter.getValue());
 	}
 }

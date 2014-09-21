@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class SQMParser
 {
-	private String filePath_ = "/home/niko/mission.sqm";
+	private String filePath_;
 	private MissionRoot missionRoot_;
 	private String fileString_;
 	

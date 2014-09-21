@@ -18,8 +18,8 @@ public class Parameter
 	private String name_ = "";
 	private String value_ = "";
 	private String text_ = "";
-	private static Pattern PARAMETER_GROUPING_REGEX = Pattern.compile("(.*)=(.*)");
-	private static Logger logger = Logger.getLogger(Element.class);
+	private final static Pattern PARAMETER_GROUPING_REGEX = Pattern.compile("(.*)=(.*)");
+	private final static Logger logger = Logger.getLogger(Element.class);
 	
 	public Parameter( String text )
 	{

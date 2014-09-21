@@ -15,10 +15,10 @@ public class ClassNode extends Element
 {
 	private Element parent_;
 	private String name_ = "";
-	private static String CLASS_START_REGEX = "class.*";
 	private Pattern CLASS_NAME_REGEX = Pattern.compile("class\\s*(.*)");
-	private static Logger logger = Logger.getLogger(ClassNode.class);
-	private static String INDENT = "	";
+	private final static String CLASS_START_REGEX = "class.*";
+	private final static Logger logger = Logger.getLogger(ClassNode.class);
+	private final static String INDENT = "	";
 	
 	public ClassNode( String text, Element parent )
 	{

@@ -14,9 +14,9 @@ import org.apache.log4j.Logger;
 
 public abstract class Element
 {
-	private static String PARAMETER_REGEX = ".*=.*";
-	private static String ARRAY_REGEX = ".*\\[\\]=.*";
-	private static Pattern NON_WHITESPACE_STRING_REGEX = Pattern.compile("\\S+"); 
+	private final static String PARAMETER_REGEX = ".*=.*";
+	private final static String ARRAY_REGEX = ".*\\[\\]=.*";
+	private final static Pattern STATEMENT_REGEX = Pattern.compile(".+=.+\";|\\S+"); 
 	private ArrayList<Parameter> parameters_ = new ArrayList<Parameter>();
 	private ArrayList<ClassNode> classNodes_ = new ArrayList<ClassNode>();
 	private ArrayList<SQMArray> sQMArrays_ = new ArrayList<SQMArray>();
@@ -45,7 +45,7 @@ public abstract class Element
 		states state = states.IN_ROOT;
 		int beginIdx = 0, endIdx = 0, indent = 0;
 		SQMArray newArray = null;
-		Matcher matcher = NON_WHITESPACE_STRING_REGEX.matcher(text);
+		Matcher matcher = STATEMENT_REGEX.matcher(text);
 		//for ( String statement : text.split("\\s+") )
 		while (matcher.find())
 		{
@@ -173,7 +173,7 @@ public abstract class Element
 		return true;
 	}
 	
-	protected Parameter getParameter(String parameterName)
+	public Parameter getParameter(String parameterName)
 	{
 		String name;
 		
@@ -250,15 +250,29 @@ public abstract class Element
 	public void updateText()
 	{
 		text_ = "";
+		//TODO: Linebreaks!
 		//Write array parameters
-		for (SQMArray sArray : getArrays())
+		for ( int i = 0 ; i < getArrays().size(); ++i )
 		{
-			text_ += sArray.getText()+"\n";
+			SQMArray parameter = getArrays().get(i);
+			if ( i == getArrays().size()-1
+					&& 0 == getParameters().size() ) //Last->no linebreak
+			{
+				text_ += parameter.getText();
+				break;
+			}
+			text_ += parameter.getText()+"\n";
 		}
 		//Write normal parameters
-		for (Parameter parameter : getParameters() )
+		for ( int i = 0 ; i < getParameters().size(); ++i )
 		{
-			text_ += parameter.getText();
+			Parameter parameter = getParameters().get(i);
+			if ( i == getParameters().size()-1) //Last->no linebreak
+			{
+				text_ += parameter.getText();
+				break;
+			}
+			text_ += parameter.getText()+"\n";
 		}
 		//Write child classes
 		for (ClassNode child : getChildren())
