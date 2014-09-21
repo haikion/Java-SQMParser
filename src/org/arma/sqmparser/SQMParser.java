@@ -65,6 +65,15 @@ public class SQMParser
 		classNode.delete();
 		return true;
 	}
+
+	/**
+	 * @param name is a name of a classes to be searched.
+	 * @return ArrayList of ClassNodes with given name
+	 */
+	public ArrayList<ClassNode> getClassesByName(String name)
+	{
+		return missionRoot_.getClassesByName(name);
+	}	
 	
 	public ClassNode getClassByID( String id )
 	{

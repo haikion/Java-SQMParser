@@ -1,6 +1,10 @@
 package org.arma.sqmparser.tests;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
+import org.arma.sqmparser.ClassNode;
 import org.arma.sqmparser.MissionRoot;
 import org.junit.Test;
 
@@ -18,8 +22,16 @@ public class MissionRootTests {
 		      					  "};\n";
 	
 	@Test
-	public void testGetAllClasses() {
+	public void testGetAllClasses() 
+	{
 		missionRoot_ = new MissionRoot(rootTextClassInside);
 		assertEquals(2, missionRoot_.getAllClasses().size());
+	}
+	@Test
+	public void testGetClassesByName() 
+	{
+		missionRoot_ = new MissionRoot(rootTextClassInside);
+		ArrayList<ClassNode> classNodes = missionRoot_.getClassesByName("groups");
+		assertEquals(1, classNodes.size());		
 	}
 }

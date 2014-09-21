@@ -20,6 +20,23 @@ public class MissionRoot extends Element
 	}
 	
 	/**
+	 * @param name is a name of a classes to be searched.
+	 * @return ArrayList of ClassNodes with given name
+	 */
+	public ArrayList<ClassNode> getClassesByName(String name)
+	{
+		ArrayList<ClassNode> rVal = new ArrayList<ClassNode>();
+		for (ClassNode classNode : getAllClasses() )
+		{
+			if (classNode.getName().equals(name))
+			{
+				rVal.add(classNode);
+			}
+		}
+		return rVal;
+	}
+	
+	/**
 	 * @return all of the classes
 	 */
 	public ArrayList<ClassNode> getAllClasses()
