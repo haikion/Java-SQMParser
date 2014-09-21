@@ -8,27 +8,9 @@ public class SQMParserTests {
 
 	static String filePath1 = "testMissions/missionSimple.sqm";
 	static String filePathOut1 = "testMissions/missionSimple_edited.sqm";
-	
-/*	@Test
-	public void testParse() 
-	{	
-		SQMParser parser = new SQMParser();
-		
-		assertTrue(parser.parse(filePath1));
-	}
+	static String filePathComplicated = "testMissions/mission_complicated.sqm";
+	static String filePathOut2 = "testMissions/complicated_edited.sqm";
 
-	@Test
-	public void testDeleteString() 
-	{
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testDeleteInteger() 
-	{
-		fail("Not yet implemented");
-	}
-*/
 	@Test
 	public void testGetClassString() 
 	{
@@ -48,11 +30,13 @@ public class SQMParserTests {
 		parser.deleteByID("1");
 		parser.write(filePathOut1);
 	}
-/*
 	@Test
-	public void testWrite() 
+	public void testWriteComplicated()
 	{
-		fail("Not yet implemented");
+		SQMParser parser = new SQMParser();
+		
+		parser.parseFile(filePathComplicated);
+		parser.deleteByID("1");
+		parser.write(filePathOut2);		
 	}
-*/
 }

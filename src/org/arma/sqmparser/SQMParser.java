@@ -18,6 +18,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class SQMParser
 {
@@ -44,6 +45,14 @@ public class SQMParser
 		}
 		missionRoot_ = new MissionRoot(fileString_);
 		return true;
+	}
+	
+	/**
+	 * @return all of the classes
+	 */
+	public ArrayList<ClassNode> getAllClasses()
+	{
+		return missionRoot_.getAllClasses();
 	}
 	
 	public boolean deleteByID( String id )
