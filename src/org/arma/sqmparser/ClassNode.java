@@ -43,7 +43,7 @@ public class ClassNode extends Element
 	
 	public String getID()
 	{
-		Parameter parameter = findParameter("id");
+		Parameter parameter = getParameter("id");
 		if (parameter != null)
 		{
 			return parameter.getValue();
