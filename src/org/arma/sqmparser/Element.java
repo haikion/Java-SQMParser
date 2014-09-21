@@ -148,7 +148,7 @@ public abstract class Element
 	 */
 	public boolean addParameter(String name, String value)
 	{
-		if ( findParameter(name) != null )
+		if ( getParameter(name) != null )
 		{
 			return false;
 		}
@@ -173,7 +173,7 @@ public abstract class Element
 		return true;
 	}
 	
-	protected Parameter findParameter(String parameterName)
+	protected Parameter getParameter(String parameterName)
 	{
 		String name;
 		
@@ -190,7 +190,7 @@ public abstract class Element
 	
 	public boolean setParameterValue(String parameterName, String newValue)
 	{
-		Parameter parameter = findParameter(parameterName);
+		Parameter parameter = getParameter(parameterName);
 		if (parameter == null)
 		{
 			return false;
