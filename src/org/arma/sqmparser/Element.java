@@ -250,7 +250,6 @@ public abstract class Element
 	public void updateText()
 	{
 		text_ = "";
-		//TODO: Linebreaks!
 		//Write array parameters
 		for ( int i = 0 ; i < getArrays().size(); ++i )
 		{
