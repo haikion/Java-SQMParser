@@ -36,11 +36,17 @@ public class ClassNode extends Element
 		logger.debug("Added new class name=" + name_);		
 	}
 	
+	/**
+	 * Returns mission.sqm text
+	 */
 	public String getText( )
 	{
 		return super.getText();
 	}
 	
+	/**
+	 * @return id of the class
+	 */
 	public String getID()
 	{
 		Parameter parameter = getParameter("id");
@@ -51,11 +57,17 @@ public class ClassNode extends Element
 		return null;
 	}
 	
+	/**
+	 * @return name of the class 
+	 */
 	public String getName( )
 	{
 		return name_;
 	}
 	
+	/**
+	 * @return removes class from the mission
+	 */
 	public boolean delete()
 	{
 		if (parent_ == null)
@@ -76,16 +88,26 @@ public class ClassNode extends Element
 		return false;
 	}
 	
+	/**
+	 * Add a parent to the class
+	 * @param element is a parent
+	 */
 	public void addParent(Element element) 
 	{
 		parent_ = element;
 	}
 	
+	/**
+	 * @return parent of the class
+	 */
 	public Element getParent() 
 	{
 		return parent_;
 	}
 	
+	/**
+	 * Updates text according to the changes
+	 */
 	@Override
 	public void updateText()
 	{

@@ -142,7 +142,7 @@ public abstract class Element
 		return classNodes_;
 	}
 	
-	/*
+	/**
 	 * Attempts to add new parameter. returns false
 	 * if parameter already exists
 	 */
@@ -156,7 +156,7 @@ public abstract class Element
 		parameters_.add(newParameter);
 		return true;
 	}
-	/*
+	/**
 	 * Attempts to remove  a parameter. returns false 
 	 * if parameter doesn't exist.
 	 */
@@ -217,7 +217,7 @@ public abstract class Element
 		return classNodes_;
 	}
 	
-	/*
+	/**
 	 * Searches through the mission and
 	 * tries to return a class with given id.
 	 */

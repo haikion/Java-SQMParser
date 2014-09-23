@@ -51,11 +51,17 @@ public class Parameter
 		return name_;
 	}
 	
+	/**
+	 * @return a string correspondence in the mission.sqm
+	 */
 	public String getText( ) 
 	{
 		return text_;
 	}
 	
+	/**
+	 * updates text according to the changes
+	 */
 	private void updateText( )
 	{
 		text_ = name_ + "=" + value_ + ";";
