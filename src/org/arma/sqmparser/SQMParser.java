@@ -26,7 +26,7 @@ public class SQMParser
 	private MissionRoot missionRoot_;
 	private String fileString_;
 	
-	static String readFile(String path) 
+	private static String readFileToString(String path) 
 			  throws IOException 
 	{ 
 		Charset encoding =  StandardCharsets.UTF_8;
@@ -35,11 +35,16 @@ public class SQMParser
 		return new String(encoded, encoding);
 	}
 	
+	/**
+	 * Parses the contents of a mission.sqm file.
+	 * @param filePath is path to the file
+	 * @return returns true if the file was succesfully read
+	 */
 	public boolean parseFile( String filePath )
 	{
 		filePath_ = filePath;
 		try {
-			fileString_ = readFile(filePath_);
+			fileString_ = readFileToString(filePath_);
 		} catch (IOException e) {
 			return false;
 		}
@@ -55,6 +60,10 @@ public class SQMParser
 		return missionRoot_.getAllClasses();
 	}
 	
+	/**
+	 * @param id is a id parameter value of a class to be removed
+	 * @return returns true if class was deleted
+	 */
 	public boolean deleteByID( String id )
 	{
 		ClassNode classNode = missionRoot_.getClassByID(id);
@@ -75,6 +84,11 @@ public class SQMParser
 		return missionRoot_.getClassesByName(name);
 	}	
 	
+	/**
+	 * Finds classes with given ID
+	 * @param "id" is id parameter value of a class to be searched.
+	 * @return Found classNode or null if nothing was found
+	 */
 	public ClassNode getClassByID( String id )
 	{
 		ClassNode node;
@@ -88,7 +102,10 @@ public class SQMParser
 		return node;
 	}
 	
-	
+	/**
+	 * @param outputFilePath is path to the file to be written
+	 * @return returns true if a file was written
+	 */
 	public boolean write( String outputFilePath )
 	{
 		 Writer writer = null;
@@ -111,6 +128,10 @@ public class SQMParser
 		 return false;
 	}
 
+	/**
+	 * @param id is a id parameter value to be found
+	 * @return Returns string of a class (Same as copy paste from the mission.sqm)
+	 */
 	public String getClassString(String id) {
 		ClassNode  cNode = getClassByID(id);
 		if (cNode == null)
