@@ -103,6 +103,25 @@ public class SQMParser
 	}
 	
 	/**
+	 * 
+	 * @param name is name of the parameter
+	 * @param value is value of the parameter
+	 * @return class with given parameter with the given value
+	 */	
+	public ClassNode getClassByParameter( String name, String value )
+	{
+		ClassNode node;
+		try {
+			node = missionRoot_.getClassByParameter(name, value);
+		} 
+		catch (java.lang.NullPointerException e)
+		{
+			return null;
+		}
+		return node;
+	}	
+	
+	/**
 	 * @param outputFilePath is path to the file to be written
 	 * @return returns true if a file was written
 	 */
@@ -132,7 +151,7 @@ public class SQMParser
 	 * @param id is a id parameter value to be found
 	 * @return Returns string of a class (Same as copy paste from the mission.sqm)
 	 */
-	public String getClassString(String id) {
+	public String getClassStringByID(String id) {
 		ClassNode  cNode = getClassByID(id);
 		if (cNode == null)
 		{

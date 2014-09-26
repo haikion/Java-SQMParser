@@ -17,7 +17,7 @@ public class SQMParserTests {
 		SQMParser parser = new SQMParser();
 		
 		parser.parseFile(filePath1);
-		String text = parser.getClassString("1");
+		String text = parser.getClassStringByID("1");
 		assertTrue(text != null);
 	}
 

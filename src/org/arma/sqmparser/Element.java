@@ -222,27 +222,33 @@ public abstract class Element
 	 * tries to return a class with given id.
 	 */
 	public ClassNode getClassByID(String id)
-	{		
-		ClassNode tmp;
-		String childID;
-		
+	{
+		return getClassByParameter("id", id);
+	}
+	
+	/**
+	 * Searches through the mission and
+	 * tries to return a class with given parameter value.
+	 */
+	public ClassNode getClassByParameter(String name, String value)
+	{
 		for (ClassNode child : classNodes_)
 		{
-			childID = child.getID();
-			logger.debug("Searching id="+childID+" name="+
-					child.getName()+" ChildrenCount="+child.getChildren().size());
-			if (id.equals(childID))
+			Parameter parameter = child.getParameter(name);
+			ClassNode grandChild;
+
+			if (parameter != null && parameter.getValue().equals(value))
 			{
 				return child;
 			}
-			else if ( (tmp = child.getClassByID(id)) != null)
+			else if ((grandChild = child.getClassByParameter(name, value)) != null)
 			{
-				return tmp;
+				return grandChild;
 			}
 		}
 		return null;
 	}
-
+	
 	public void setText(String text) 
 	{
 		text_ = text;

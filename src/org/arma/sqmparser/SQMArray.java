@@ -68,6 +68,11 @@ public class SQMArray {
 		}
 	}
 
+	public ArrayList<String> getValues()
+	{
+		return values_;
+	}
+
 	public String getName() {
 		return name_;
 	};
