@@ -188,15 +188,21 @@ public abstract class Element
 		return null;
 	}
 	
-	public boolean setParameterValue(String parameterName, String newValue)
+	/**
+	 * sets parameter value. If parameter is not found new parameter will
+	 * created with given parameter name.
+	 * @param parameterName is a name of the parameter
+	 * @param newValue is a new value for the parameter
+	 */
+	public void setParameter(String parameterName, String newValue)
 	{
 		Parameter parameter = getParameter(parameterName);
 		if (parameter == null)
 		{
-			return false;
+			Parameter newParameter = new Parameter(parameterName + "=" +newValue+";");
+			parameters_.add(newParameter);
 		}
 		parameter.setValue(newValue);
-		return true;
 	}
 	
 	public ArrayList<Parameter> getParameters( )

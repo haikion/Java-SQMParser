@@ -85,7 +85,7 @@ public class classNodeTests
 	public void valueChange()
 	{
 		ClassNode node = new ClassNode(classTextSimple, null);
-		node.setParameterValue("id", "3");
+		node.setParameter("id", "3");
 		node.updateText();
 		assertEquals("\n"+classTextValue, node.getText());
 	}

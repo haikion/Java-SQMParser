@@ -119,7 +119,7 @@ public class ClassNode extends Element
 		itemCount = getChildren().size();
 		if (itemCount > 0)
 		{
-			setParameterValue("items", Integer.toString(itemCount));
+			setParameter("items", Integer.toString(itemCount));
 		}
 		else
 		{
