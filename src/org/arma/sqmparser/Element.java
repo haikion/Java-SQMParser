@@ -201,6 +201,7 @@ public abstract class Element
 		{
 			Parameter newParameter = new Parameter(parameterName + "=" +newValue+";");
 			parameters_.add(newParameter);
+			return;
 		}
 		parameter.setValue(newValue);
 	}
