@@ -15,8 +15,9 @@ public class SQMArray {
 	ArrayList<String> values_ = new ArrayList<String>();
 	String name_ = "";
 	//private static Logger logger = Logger.getLogger(SQMArray.class);
-	public static final List<String> DISALLOWED_VALUES = 
+	private static final List<String> DISALLOWED_VALUES = 
 		    Collections.unmodifiableList(Arrays.asList("{", "};", "}"));
+	private static final String NOT_NAME_REGEX = "\\[\\].*=.*";
 	
 	public void add(String value) 
 	{
@@ -32,17 +33,13 @@ public class SQMArray {
 	public SQMArray(String text) 
 	{
 		text = text.trim();
-		if (text.contains("};")) 
-		{
-			parseArrayLine(text);
-			return;
-		}	
-		name_ = text.replaceAll("\\=(.*)", "");
+		parseValues(text);
+		name_ = text.replaceAll(NOT_NAME_REGEX, "");
 	}
 	
 	public String getText() 
 	{
-		String rVal = name_+"={";
+		String rVal = name_+"[]"+"={";
 		if (values_.size() == 0) 
 		{
 			return rVal;
@@ -56,10 +53,10 @@ public class SQMArray {
 		return rVal;
 	}
 
-	public void parseArrayLine(String statement) 
+	public void parseValues(String statement) 
 	{
-		name_ = statement.replaceAll("\\=(.*)", "");
-		statement = statement.replaceAll("(.*)\\=\\{", "");
+		name_ = statement.replaceAll(NOT_NAME_REGEX, "");
+		statement = statement.replaceAll(".*=.*\\{", "");
 		statement = statement.replace("}", "");
 		statement = statement.replace(";", "");
 		for (String value : statement.split(",") )
@@ -75,5 +72,5 @@ public class SQMArray {
 
 	public String getName() {
 		return name_;
-	};
+	}
 };

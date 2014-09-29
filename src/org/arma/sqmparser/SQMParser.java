@@ -120,6 +120,25 @@ public class SQMParser
 		}
 		return node;
 	}	
+
+	/**
+	 * 
+	 * @param name is name of the array
+	 * @param values is value of the array
+	 * @return class with given parameter with the given value
+	 */	
+	public ClassNode getClassByArray( String name, ArrayList<String> values )
+	{
+		ClassNode node;
+		try {
+			node = missionRoot_.getClassByArray(name, values);
+		} 
+		catch (java.lang.NullPointerException e)
+		{
+			return null;
+		}
+		return node;
+	}	
 	
 	/**
 	 * @param outputFilePath is path to the file to be written

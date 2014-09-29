@@ -14,9 +14,14 @@ import org.apache.log4j.Logger;
 
 public abstract class Element
 {
-	private final static String PARAMETER_REGEX = ".*=.*";
-	private final static String ARRAY_REGEX = ".*\\[\\]=.*";
-	private final static Pattern STATEMENT_REGEX = Pattern.compile(".+=.+\";|\\S+"); 
+	//Matches parameter
+	private final static String PARAMETER_REGEX = ".+=.+?;";
+	//Matches Array parameter
+	private final static String ARRAY_REGEX = ".+\\[\\].*=(.|\\n)+?}";
+	//Matches class definition. Not used because fails when class is inside class.
+	//private final static String CLASS_REGEX = "class(.|\n)+};";
+	private final static String WORD_REGEX ="\\S+";
+	private final static Pattern STATEMENT_REGEX = Pattern.compile(ARRAY_REGEX+"|"+PARAMETER_REGEX+"|"+WORD_REGEX); //Pattern.compile(".+=.+\";|\\S+"); 
 	private ArrayList<Parameter> parameters_ = new ArrayList<Parameter>();
 	private ArrayList<ClassNode> classNodes_ = new ArrayList<ClassNode>();
 	private ArrayList<SQMArray> sQMArrays_ = new ArrayList<SQMArray>();
@@ -29,8 +34,8 @@ public abstract class Element
 		CLASS_FOUND, //Class keyword was found
 		IN_ROOT,  //Not inside classes
 		IN_CLASS,  //Inside class parentheses
-		CLASS_NAMED, //class name was found.
-		IN_ARRAY //Inside SQM array
+		CLASS_NAMED //class name was found.
+//		IN_ARRAY //Inside SQM array
 	}
 	
 	public Element(String text) 
@@ -46,19 +51,18 @@ public abstract class Element
 		int beginIdx = 0, endIdx = 0, indent = 0;
 		SQMArray newArray = null;
 		Matcher matcher = STATEMENT_REGEX.matcher(text);
-		//for ( String statement : text.split("\\s+") )
 		while (matcher.find())
 		{
 			String statement = matcher.group();
-			//logger.debug("Processing word: \"" + statement + 
-			//	"\" State=" + state.toString() +
-			//		" indent=" + indent);
+			logger.debug("Processing word: \"" + statement + 
+				"\" State=" + state.toString() +
+					" indent=" + indent);
 			//indent watchers
 			statement = statement.trim();
 			if (statement.length() == 0) {
 				continue;
 			}
-			if (state == states.IN_ARRAY || state == states.IN_CLASS)
+			if (state == states.IN_CLASS)
 			{
 				if (statement.contains("{")) 
 				{
@@ -80,22 +84,7 @@ public abstract class Element
 				else if (statement.matches(ARRAY_REGEX))
 				{
 					newArray = new SQMArray(statement);
-					if (statement.contains("}")) 
-					{
-						newArray.parseArrayLine(statement);
-						logger.debug("Added new (one line) array name="+newArray.getName());						
-						sQMArrays_.add(newArray);
-					}
-					else if ( statement.contains("{") )
-					{
-						indent = 1;
-						state = states.IN_ARRAY;
-					}
-					else
-					{
-						indent = 0;
-						state = states.IN_ARRAY;
-					}
+					sQMArrays_.add(newArray);
 				}
 				else if (statement.matches(PARAMETER_REGEX)) 
 				{
@@ -125,16 +114,6 @@ public abstract class Element
 					String classText = text.substring(beginIdx, endIdx);
 					ClassNode newClass = new ClassNode(classText, this);
 					classNodes_.add(newClass);
-					state = states.IN_ROOT;
-				}
-			}
-			else if (state == states.IN_ARRAY)
-			{
-				newArray.add(statement);
-				if (statement.contains("}") && indent == 0) 
-				{
-					sQMArrays_.add(newArray);
-					logger.debug("Added new array name="+newArray.getName());
 					state = states.IN_ROOT;
 				}
 			}
@@ -175,11 +154,22 @@ public abstract class Element
 	
 	public Parameter getParameter(String parameterName)
 	{
-		String name;
-		
 		for ( Parameter parameter : getParameters() )
 		{
-			name = parameter.getName();
+			String name = parameter.getName();
+			if (name.equals(parameterName))
+			{
+				return parameter;
+			}
+		}
+		return null;
+	}
+	
+	public SQMArray getArray(String name) 
+	{
+		for ( SQMArray parameter : getArrays() )
+		{
+			String parameterName = parameter.getName();
 			if (name.equals(parameterName))
 			{
 				return parameter;
@@ -195,6 +185,12 @@ public abstract class Element
 	 * @param newValue is a new value for the parameter
 	 */
 	public void setParameter(String parameterName, String newValue)
+	{
+		setParameterNoUpdate(parameterName, newValue);
+		updateText();
+	}
+	
+	protected void setParameterNoUpdate(String parameterName, String newValue)
 	{
 		Parameter parameter = getParameter(parameterName);
 		if (parameter == null)
@@ -249,6 +245,29 @@ public abstract class Element
 				return child;
 			}
 			else if ((grandChild = child.getClassByParameter(name, value)) != null)
+			{
+				return grandChild;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Searches through the mission and
+	 * tries to return a class with given parameter value.
+	 */
+	public ClassNode getClassByArray(String name, ArrayList<String> values)
+	{
+		for (ClassNode child : classNodes_)
+		{
+			SQMArray parameter = child.getArray(name);
+			ClassNode grandChild;
+
+			if (parameter != null && parameter.getValues().equals(values))
+			{
+				return child;
+			}
+			else if ((grandChild = child.getClassByArray(name, values)) != null)
 			{
 				return grandChild;
 			}

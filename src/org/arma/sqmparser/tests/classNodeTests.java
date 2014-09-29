@@ -105,4 +105,15 @@ public class classNodeTests
 		Parameter parameter = node.getParameter("init");
 		assertEquals("this addweapon \"\"ACRE_PRC148_UHF\"\"", parameter.getValue());
 	}
+	@Test
+	public void testArrayGet()
+	{
+		ClassNode node = new ClassNode(classTextClassInside, null);
+		//position[]={3445.2603,19,3613.9331};" +
+		ArrayList<String> values = new ArrayList<String>();
+		values.add("3445.2603");
+		values.add("19");
+		values.add("3613.9331");
+		ClassNode found = node.getClassByArray("position", values);
+	}
 }

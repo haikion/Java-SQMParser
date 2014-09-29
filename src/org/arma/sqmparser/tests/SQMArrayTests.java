@@ -21,17 +21,11 @@ public class SQMArrayTests {
 		
 		assertEquals("position[]={3129.9126,29.2691,4325.1934};", testArray.getText());
 	}
-	
+
 	@Test
-	public void multiLine() 
+	public void name()
 	{
-		String[] lines = arrayLines2.split("\\s+"); 
-		SQMArray testArray = new SQMArray(lines[1]);
-		
-		for (int i = 2; i < lines.length; ++i )
-		{
-			testArray.add(lines[i]);
-		}
-		assertEquals("addOns[]={\"utes\"};", testArray.getText());
+		SQMArray testArray = new SQMArray(arrayLine1);
+		assertEquals("position", testArray.getName());
 	}
 }
