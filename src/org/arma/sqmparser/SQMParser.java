@@ -61,12 +61,23 @@ public class SQMParser
 	}
 	
 	/**
+	 * TODO: Remove
 	 * @param id is a id parameter value of a class to be removed
 	 * @return returns true if class was deleted
 	 */
 	public boolean deleteByID( String id )
 	{
-		ClassNode classNode = missionRoot_.getClassByID(id);
+		return deleteByParameter("id", id);
+	}
+	
+	/**
+	 * @param id is a id parameter value of a class to be removed
+	 * @param name is a name of the parameter
+	 * @return returns true if class was deleted
+	 */
+	public boolean deleteByParameter( String name, String value )
+	{
+		ClassNode classNode = missionRoot_.getClassByParameter(name , value);
 		if (classNode == null)
 		{
 			return false;
@@ -82,24 +93,6 @@ public class SQMParser
 	public ArrayList<ClassNode> getClassesByName(String name)
 	{
 		return missionRoot_.getClassesByName(name);
-	}	
-	
-	/**
-	 * Finds classes with given ID
-	 * @param "id" is id parameter value of a class to be searched.
-	 * @return Found classNode or null if nothing was found
-	 */
-	public ClassNode getClassByID( String id )
-	{
-		ClassNode node;
-		try {
-			node = missionRoot_.getClassByID(id);
-		} 
-		catch (java.lang.NullPointerException e)
-		{
-			return null;
-		}
-		return node;
 	}
 	
 	/**
@@ -155,23 +148,28 @@ public class SQMParser
 		     writer.write(missionRoot_.getText());
 		 } catch (IOException ex) 
 		 {
-		   // report
+			 return false;
 		 } 
 		 try 
 		 {
 			 writer.close();
-			 return true;
 		 } 
-		 catch (Exception ex) {}
-		 return false;
+		 catch (Exception ex) 
+		 {
+			 return false;
+		 }
+		 return true;
 	}
 
 	/**
-	 * @param id is a id parameter value to be found
-	 * @return Returns string of a class (Same as copy paste from the mission.sqm)
+	 * Returns first occurrence of a class with given parameter
+	 * and value. Returns null if not found.
+	 * @param name is name of the parameter
+	 * @param value is the value of the parameter
+	 * @return class text or null if not found.
 	 */
-	public String getClassStringByID(String id) {
-		ClassNode  cNode = getClassByID(id);
+	public String getClassTextByParameter(String name, String value ) {
+		ClassNode  cNode = getClassByParameter(name, value);
 		if (cNode == null)
 		{
 			return null;

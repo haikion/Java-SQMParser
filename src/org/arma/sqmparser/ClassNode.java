@@ -136,7 +136,7 @@ public class ClassNode extends Element
 		text += content.replaceAll("(?m)^", INDENT);
 		text += "\n"+"};";
 		super.setText(text);
-		if (parent_ == null) //Should this even be possible?
+		if (parent_ == null) //Should not be possible. Exists for testability
 		{
 			logger.debug("Warning: class "+getName()+" doesn't have a parent!");
 			return;

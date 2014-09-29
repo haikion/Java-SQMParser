@@ -94,7 +94,7 @@ public class classNodeTests
 	{
 		ClassNode node = new ClassNode(classTextClassInside, null);
 		assertEquals(1, node.getChildren().size());
-		ClassNode child = node.getClassByID("1");
+		ClassNode child = node.getClassByParameter("id", "1");
 		child.delete();
 		assertEquals(0, node.getChildren().size());
 	}

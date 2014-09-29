@@ -12,12 +12,12 @@ public class SQMParserTests {
 	static String filePathOut2 = "testMissions/complicated_edited.sqm";
 
 	@Test
-	public void testGetClassString() 
+	public void testGetClassText() 
 	{
 		SQMParser parser = new SQMParser();
 		
 		parser.parseFile(filePath1);
-		String text = parser.getClassStringByID("1");
+		String text = parser.getClassTextByParameter("id", "1");
 		assertTrue(text != null);
 	}
 
