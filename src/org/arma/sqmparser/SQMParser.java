@@ -22,9 +22,7 @@ import java.util.ArrayList;
 
 public class SQMParser
 {
-	private String filePath_;
 	private MissionRoot missionRoot_;
-	private String fileString_;
 	
 	private static String readFileToString(String path) 
 			  throws IOException 
@@ -42,13 +40,14 @@ public class SQMParser
 	 */
 	public boolean parseFile( String filePath )
 	{
-		filePath_ = filePath;
+		String fileString;
+		
 		try {
-			fileString_ = readFileToString(filePath_);
+			fileString = readFileToString(filePath);
 		} catch (IOException e) {
 			return false;
 		}
-		missionRoot_ = new MissionRoot(fileString_);
+		missionRoot_ = new MissionRoot(fileString);
 		return true;
 	}
 	
