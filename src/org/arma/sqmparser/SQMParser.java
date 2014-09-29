@@ -61,16 +61,6 @@ public class SQMParser
 	}
 	
 	/**
-	 * TODO: Remove
-	 * @param id is a id parameter value of a class to be removed
-	 * @return returns true if class was deleted
-	 */
-	public boolean deleteByID( String id )
-	{
-		return deleteByParameter("id", id);
-	}
-	
-	/**
 	 * @param id is a id parameter value of a class to be removed
 	 * @param name is a name of the parameter
 	 * @return returns true if class was deleted

@@ -25,6 +25,7 @@ public class SQMArray {
 		{
 			return;
 		}
+		//FIXME: Why?
 		value = value.replace(",", ""); //TODO: Replace only when outside parenthesis.
 		//logger.debug("adding value: "+value);
 		values_.add(value);

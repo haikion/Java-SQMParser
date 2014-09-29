@@ -27,7 +27,7 @@ public class SQMParserTests {
 		SQMParser parser = new SQMParser();
 		
 		parser.parseFile(filePath1);
-		parser.deleteByID("1");
+		parser.deleteByParameter("id", "1");
 		parser.write(filePathOut1);
 	}
 	@Test
@@ -36,7 +36,7 @@ public class SQMParserTests {
 		SQMParser parser = new SQMParser();
 		
 		parser.parseFile(filePathComplicated);
-		parser.deleteByID("1");
+		parser.deleteByParameter("id", "1");
 		parser.write(filePathOut2);		
 	}
 }

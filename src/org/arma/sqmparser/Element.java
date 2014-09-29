@@ -219,17 +219,7 @@ public abstract class Element
 	public ArrayList<ClassNode> getChildren() {
 		return classNodes_;
 	}
-	
-	/**
-	 * TODO: Remove
-	 * Searches through the mission and
-	 * tries to return a class with given id.
 
-	public ClassNode getClassByID(String id)
-	{
-		return getClassByParameter("id", id);
-	}
-	*/
 	/**
 	 * Searches through the mission and
 	 * tries to return a class with given parameter value.
