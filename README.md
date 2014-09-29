@@ -39,7 +39,7 @@ class SQMParserUser
 		SQMParser parser = new SQMParser(); //Create new SQMParser object
 		
 		parser.parseFile("mission.sqm");  //open existing mission.sqm file
-		parser.deleteByID("1"); //Delete unit with ID 1
+		parser.deleteByParameter("id", "1"); //Delete unit with ID 1
 		parser.write("mission_edited.sqm"); //write new mission.sqm file
 	}
 }
