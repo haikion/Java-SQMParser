@@ -6,6 +6,9 @@
 
 package org.arma.sqmparser;
 
+//import java.lang.reflect.Array;
+//import java.util.Arrays;
+//import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +22,7 @@ public class ClassNode extends Element
 	private final static String CLASS_START_REGEX = "class.*";
 	private final static Logger logger = Logger.getLogger(ClassNode.class);
 	private final static String INDENT = "	";
+	//private final static List<String> CLASSES_WITHOUT_ITEMS = Arrays.asList("Mission", "OutroLoose", "OutroWin");
 	
 	public ClassNode( String text, Element parent )
 	{
@@ -104,20 +108,25 @@ public class ClassNode extends Element
 	public void updateText()
 	{
 		String text = "";
-		String content = "";
-		int itemCount = 0;
-		
+		String content = "";		
 		//Update items count
+		/*
+		int itemCount = 0;
 		itemCount = getChildren().size();
-		if (itemCount > 0)
+		if (itemCount > 1 &&
+				! CLASSES_WITHOUT_ITEMS.contains(getName()))
 		{
 			setParameterNoUpdate("items", Integer.toString(itemCount));
 		}
 		else
 		{
-			//Remove items parameter if no children exist
+			//Remove items parameter if 1 or less children exist.
 			removeParameter("items");
 		}
+		*/
+		//Items parameter does not seem to be necessary.
+		//item<number> names would have to consist of numbers less than items-1.
+		removeParameter("items");
 		//sets content as text.
 		super.updateText();
 		content = super.getText();

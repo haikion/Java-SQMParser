@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 public abstract class Element
 {
 	//Matches parameter
-	private final static String PARAMETER_REGEX = ".+=.+?;";
+	private final static String PARAMETER_REGEX = ".+=.+;";
 	//Matches Array parameter
 	private final static String ARRAY_REGEX = ".+\\[\\]=[\\s|\\S]*?\\};";
 	//Matches class definition. Not used because fails when class is inside class.
@@ -24,7 +24,7 @@ public abstract class Element
 	private final static String WORD_REGEX ="\\S+";
 	private final static Pattern STATEMENT_REGEX = Pattern.compile(ARRAY_REGEX+"|"+PARAMETER_REGEX+"|"+WORD_REGEX); //Pattern.compile(".+=.+\";|\\S+"); 
 	private ArrayList<Parameter> parameters_ = new ArrayList<Parameter>();
-	private ArrayList<ClassNode> classNodes_ = new ArrayList<ClassNode>();
+	private ArrayList<ClassNode> children_ = new ArrayList<ClassNode>();
 	private ArrayList<SQMArray> sQMArrays_ = new ArrayList<SQMArray>();
 	
 	private String text_;
@@ -41,6 +41,18 @@ public abstract class Element
 	public Element(String text) 
 	{
 		text_ = fixIndent(text);
+	}
+	
+	public ClassNode getChildByName(String name)
+	{
+		for (ClassNode child : children_)
+		{
+			if (name.equals(child.getName()))
+			{
+				return child;
+			}
+		}
+		return null;
 	}
 	
 	//Gets top most classes (inner classes not included!)
@@ -113,12 +125,12 @@ public abstract class Element
 					//Create new classNode and advance to next state
 					String classText = text.substring(beginIdx, endIdx);
 					ClassNode newClass = new ClassNode(classText, this);
-					classNodes_.add(newClass);
+					children_.add(newClass);
 					state = states.IN_ROOT;
 				}
 			}
 		}
-		return classNodes_;
+		return children_;
 	}
 	
 	/**
@@ -217,7 +229,7 @@ public abstract class Element
 	}
 	
 	public ArrayList<ClassNode> getChildren() {
-		return classNodes_;
+		return children_;
 	}
 
 	/**
@@ -226,7 +238,7 @@ public abstract class Element
 	 */
 	public ClassNode getClassByParameter(String name, String value)
 	{
-		for (ClassNode child : classNodes_)
+		for (ClassNode child : children_)
 		{
 			Parameter parameter = child.getParameter(name);
 			ClassNode grandChild;
@@ -249,7 +261,7 @@ public abstract class Element
 	 */
 	public ClassNode getClassByArray(String name, ArrayList<String> values)
 	{
-		for (ClassNode child : classNodes_)
+		for (ClassNode child : children_)
 		{
 			SQMArray parameter = child.getArray(name);
 			ClassNode grandChild;
