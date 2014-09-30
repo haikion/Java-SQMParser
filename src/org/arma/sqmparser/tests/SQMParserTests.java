@@ -43,6 +43,15 @@ public class SQMParserTests {
 		parser.write(filePathComplicatedOut);		
 	}
 	@Test
+	public void testFindClassByParameter()
+	{
+		SQMParser  parser = new SQMParser();
+		
+		parser.parseFile(filePathComplicated);
+		ClassNode node = parser.getClassByParameter("text", "\"HeadlessSlot\"");
+		assertTrue(node != null);
+	}
+	@Test
 	public void testReadArray()
 	{
 		SQMParser parser = new SQMParser();

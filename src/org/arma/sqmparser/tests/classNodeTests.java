@@ -74,6 +74,14 @@ public class classNodeTests
 										"	};"								+ "\n" +
 										"};";
 	
+	
+	@Test
+	public void getClassByParameterTest()
+	{
+		ClassNode node = new ClassNode(classTextClassInside, null);
+		ClassNode found = node.getClassByParameter("id", "1");
+		assertTrue(found != null);
+	}
 	@Test
 	public void constructorTest()
 	{
@@ -157,5 +165,6 @@ public class classNodeTests
 		values.add("19");
 		values.add("3613.9331");
 		ClassNode found = node.getClassByArray("position", values);
+		assertTrue(found != null);
 	}
 }
