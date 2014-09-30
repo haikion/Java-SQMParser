@@ -17,7 +17,7 @@ public class SQMArray {
 	//private static Logger logger = Logger.getLogger(SQMArray.class);
 	private static final List<String> DISALLOWED_VALUES = 
 		    Collections.unmodifiableList(Arrays.asList("{", "};", "}"));
-	private static final String NOT_NAME_REGEX = "\\[\\].*=.*";
+	private static final String NOT_NAME_REGEX = "\\[\\][\\s|\\S]*=[\\s|\\S]*";
 	
 	public void add(String value) 
 	{
@@ -57,11 +57,12 @@ public class SQMArray {
 	public void parseValues(String statement) 
 	{
 		name_ = statement.replaceAll(NOT_NAME_REGEX, "");
-		statement = statement.replaceAll(".*=.*\\{", "");
+		statement = statement.replaceAll("(\\s|\\S)*=(\\s|\\S)*\\{", "");
 		statement = statement.replace("}", "");
 		statement = statement.replace(";", "");
 		for (String value : statement.split(",") )
 		{
+			value = value.trim();
 			values_.add(value);
 		}
 	}

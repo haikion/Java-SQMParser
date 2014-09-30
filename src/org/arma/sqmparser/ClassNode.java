@@ -37,14 +37,6 @@ public class ClassNode extends Element
 	}
 	
 	/**
-	 * Returns mission.sqm text
-	 */
-	public String getText( )
-	{
-		return super.getText();
-	}
-	
-	/**
 	 * @return id of the class
 	 */
 	public String getID()

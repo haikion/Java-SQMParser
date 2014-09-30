@@ -24,9 +24,9 @@ public class classNodeTests
 							"{\n" +
 							"	id=3;\n" +
 							"};";	
-	String classTextArray = "class Item0\n" +
-							"{\n" +
-							"	position[]={3445.2603,19,3613.9331};" +
+	String classTextArray = "class Item0"								+ "\n" +
+							"{"											+ "\n" +
+							"	position[]={3445.2603,19,3613.9331};"	+ "\n" +
 							"};";
 	String classTextClassInside = "class groups\n" +
 							      "{\n" +
@@ -38,19 +38,47 @@ public class classNodeTests
 							      "	};\n" +
 							      "};\n";
 	
-	String classTextArrayMultiline = "class Item0\n" +
-									 "{\n" +
-									 "	position[]=" +
-									 "  {	 	   3445.2603," +
-									 " 			   19," +
-									 " 			   3613.9331" +
-									 "  };" +
+	String classTextArrayMultiline = "class Item0"				+"\n"+
+									 "{"						+"\n"+
+									 "	position[]="			+"\n"+
+									 "  {	 	   3445.2603,"	+"\n"+
+									 " 			   19,"			+"\n"+
+									 " 			   3613.9331"	+"\n"+
+									 "  };"						+"\n"+
 									 "};";
+	
+	String classTextArrayMultiline2 = 
+									  "   "								+ "\n" +
+									  "class Mission"					+ "\n" +
+									  "{"								+ "\n" +
+									  "  	addOns[]="					+ "\n" +
+									  "		{" 							+ "\n" +
+									  "			\"hellskitchen\"," 		+ "\n" +
+									  "			\"cacharacters_e\"," 	+ "\n" +
+									  "			\"caweapons_e\","		+ "\n" +
+									  "			\"ace_c_men\"," 		+ "\n" +
+									  "			\"CA_Modules_Alice2\"," + "\n" +
+									  "			\"ca_modules_silvie\"," + "\n" +
+									  "		};"							+ "\n" +
+									  "};";
+	
+	String classTextArrayMultiline3 = 	""									+ "\n" +
+										"class Mission"						+ "\n" +
+										"{"									+ "\n" +
+										"	parameter=22;"					+ "\n" +
+										"	addOns[]="						+ "\n" +
+										"	{"								+ "\n" +
+										"		\"acex_ru_men_naval\","		+ "\n" +
+										"		\"smd_units\","				+ "\n" +
+										"		\"utes\""					+ "\n" +
+										"	};"								+ "\n" +
+										"};";
+	
 	@Test
 	public void constructorTest()
 	{
 		ClassNode node = new ClassNode(classTextSimple, null);
-		assertEquals("\n"+classTextSimple, node.getText());
+		assertEquals(classTextSimple, node.getText());
 		ArrayList<Parameter> parameters = node.getParameters();
 		assertEquals(1, parameters.size());
 		Parameter para = parameters.get(0);
@@ -61,7 +89,7 @@ public class classNodeTests
 	public void arrayTestAmount()
 	{
 		ClassNode node = new ClassNode(classTextArray, null);
-		assertEquals("\n"+classTextArray, node.getText());
+		assertEquals(classTextArray, node.getText());
 		ArrayList<SQMArray> parameters = node.getArrays();
 		assertEquals(1, parameters.size());
 	}
@@ -69,15 +97,29 @@ public class classNodeTests
 	public void arrayTestLines()
 	{
 		ClassNode node = new ClassNode(classTextArrayMultiline, null);
-		assertEquals("\n"+classTextArrayMultiline, node.getText());
+		assertEquals(classTextArrayMultiline, node.getText());
 		ArrayList<SQMArray> parameters = node.getArrays();
 		assertEquals(1, parameters.size());
+	}
+	@Test
+	public void arrayTestLines2()
+	{
+		ClassNode node = new ClassNode(classTextArrayMultiline2, null);
+		ArrayList<String> parameters = node.getArrays().get(0).getValues();
+		assertEquals(7, parameters.size());
+	}
+	@Test
+	public void arrayTestLines3()
+	{
+		ClassNode node = new ClassNode(classTextArrayMultiline3, null);
+		ArrayList<String> parameters = node.getArrays().get(0).getValues();
+		assertEquals(3, parameters.size());
 	}
 	@Test
 	public void classIndsideClass()
 	{
 		ClassNode node = new ClassNode(classTextClassInside, null);
-		assertEquals("\n"+classTextClassInside, node.getText());
+		assertEquals(classTextClassInside, node.getText());
 		ArrayList<ClassNode> parameters = node.getChildren();
 		assertEquals(1, parameters.size());
 	}

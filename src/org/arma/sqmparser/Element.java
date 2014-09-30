@@ -8,6 +8,7 @@
 package org.arma.sqmparser;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
@@ -17,7 +18,7 @@ public abstract class Element
 	//Matches parameter
 	private final static String PARAMETER_REGEX = ".+=.+?;";
 	//Matches Array parameter
-	private final static String ARRAY_REGEX = ".+\\[\\].*=(.|\\n)+?}";
+	private final static String ARRAY_REGEX = ".+\\[\\]=[\\s|\\S]*?\\};";
 	//Matches class definition. Not used because fails when class is inside class.
 	//private final static String CLASS_REGEX = "class(.|\n)+};";
 	private final static String WORD_REGEX ="\\S+";
@@ -35,12 +36,11 @@ public abstract class Element
 		IN_ROOT,  //Not inside classes
 		IN_CLASS,  //Inside class parentheses
 		CLASS_NAMED //class name was found.
-//		IN_ARRAY //Inside SQM array
 	}
 	
 	public Element(String text) 
 	{
-		text_ = "\n" + text;
+		text_ = fixIndent(text);
 	}
 	
 	//Gets top most classes (inner classes not included!)
@@ -54,16 +54,16 @@ public abstract class Element
 		while (matcher.find())
 		{
 			String statement = matcher.group();
-			logger.debug("Processing word: \"" + statement + 
-				"\" State=" + state.toString() +
-					" indent=" + indent);
-			//indent watchers
 			statement = statement.trim();
+			logger.debug("Processing word: \"" + statement + 
+					"\" State=" + state.toString() +
+						" indent=" + indent);
 			if (statement.length() == 0) {
 				continue;
 			}
 			if (state == states.IN_CLASS)
 			{
+				//indent watchers
 				if (statement.contains("{")) 
 				{
 					++indent;
@@ -266,24 +266,41 @@ public abstract class Element
 		return null;
 	}
 	
-	public void setText(String text) 
+	protected void setText(String text) 
 	{
 		text_ = text;
 	}
+	
+	/**
+	 * Corrects indent by figuring tab offset
+	 * from the first "{” line.
+	 * @param text
+	 * @return
+	 */
+	private String fixIndent(String text)
+	{
+		Scanner scanner = new Scanner(text);
+		scanner.nextLine();
+		String line = scanner.nextLine();
+		scanner.close();
+		String tabs = line.replace("{", "");
+		if (! tabs.matches("\t+"))
+		{
+			return text; //Didn't contain indent
+		}
+		text = text.replaceAll("(?m)^"+tabs, "");
+		return text;
+	}
+	
 	public void updateText()
 	{
 		text_ = "";
 		//Write array parameters
 		for ( int i = 0 ; i < getArrays().size(); ++i )
 		{
-			SQMArray parameter = getArrays().get(i);
-			if ( i == getArrays().size()-1
-					&& 0 == getParameters().size() ) //Last->no linebreak
-			{
-				text_ += parameter.getText();
-				break;
-			}
-			text_ += parameter.getText()+"\n";
+			SQMArray array = getArrays().get(i);
+			text_ += array.getText();
+			text_ += "\n";
 		}
 		//Write normal parameters
 		for ( int i = 0 ; i < getParameters().size(); ++i )
@@ -299,7 +316,7 @@ public abstract class Element
 		//Write child classes
 		for (ClassNode child : getChildren())
 		{
-			text_ += child.getText();
+			text_ += "\n" + child.getText();
 		};
 	}
 	
