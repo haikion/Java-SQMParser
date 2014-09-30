@@ -1,0 +1,10 @@
+version=11;
+class Mission
+{
+	addOns[]=
+	{
+		"acex_ru_men_naval",
+		"smd_units",
+		"utes"
+	};
+};
