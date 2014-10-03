@@ -24,6 +24,11 @@ public class SQMParser
 {
 	private MissionRoot missionRoot_;
 	
+	public MissionRoot getMissionRoot() 
+	{
+		return missionRoot_;
+	}
+
 	private static String readFileToString(String path) 
 			  throws IOException 
 	{ 
