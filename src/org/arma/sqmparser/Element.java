@@ -100,7 +100,7 @@ public abstract class Element
 				}
 				else if (statement.matches(PARAMETER_REGEX)) 
 				{
-					Parameter newParameter = new Parameter(statement);
+					Parameter newParameter = new Parameter(statement, this);
 					parameters_.add(newParameter);
 				}
 				

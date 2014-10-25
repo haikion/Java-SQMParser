@@ -18,6 +18,7 @@ public class Parameter
 	private String name_ = "";
 	private String value_ = "";
 	private String text_ = "";
+	private Element parent_;
 	private final static Pattern PARAMETER_GROUPING_REGEX = Pattern.compile("(.*)=(.*)");
 	private final static Logger logger = Logger.getLogger(Element.class);
 	
@@ -33,6 +34,12 @@ public class Parameter
 		value_ = match.group(2);
 		value_ = value_.replace(";", "");
 		logger.debug("addded new parameter name="+name_+" value="+value_);
+	}
+	
+	public Parameter( String text, Element parent )
+	{
+		this(text);
+		parent_ = parent;
 	}
 	
 	public String getValue( )
@@ -65,5 +72,6 @@ public class Parameter
 	private void updateText( )
 	{
 		text_ = name_ + "=" + value_ + ";";
+		parent_.updateText();
 	}
 }
