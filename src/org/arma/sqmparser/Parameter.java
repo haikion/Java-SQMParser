@@ -49,6 +49,11 @@ public class Parameter
 	
 	public void setValue(String value)
 	{
+		if (value.equals(value_))
+		{
+			//No change no need to update text
+			return;
+		}
 		value_ = value;
 		updateText();
 	}

@@ -198,6 +198,11 @@ public abstract class Element
 	 */
 	public void setParameter(String parameterName, String newValue)
 	{
+		//No change
+		if ( newValue.equals(getParameter(parameterName)) )
+		{
+			return;
+		}
 		setParameterNoUpdate(parameterName, newValue);
 		updateText();
 	}
